@@ -5,6 +5,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     
+    <%= stylesheet_link_tag "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"%>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -41,9 +42,9 @@
                   <%= link_to 'New Tweet', new_tweet_path, class: "button is-info is-inverted"%>
                 </p>
                 <% if user_signed_in? %>
-                  <p class="control">
+                  <%# <p class="control">
                     <%= link_to current_user.name, edit_user_registration_path, class: "button is-info" %>
-                  </p>
+                  <%# </p> %>
 
                   <p>
                     <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "button is-info" %>

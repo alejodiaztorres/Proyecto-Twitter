@@ -5,7 +5,7 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.last(50)
+    @tweets = Tweet.limit(50)
     @tweet = Tweet.new
   end
 
@@ -26,7 +26,7 @@ class TweetsController < ApplicationController
   # POST /tweets
   # POST /tweets.json
   def create
-    @tweet = current_user.tweets.build(tweet_params)
+    @tweet = current_user.tweets.build(tweet_params) 
 
     respond_to do |format|
       if @tweet.save
