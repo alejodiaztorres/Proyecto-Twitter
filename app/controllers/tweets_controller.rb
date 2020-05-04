@@ -5,7 +5,7 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.limit(50)
+    @tweets = Tweet.order(created_at: :desc).paginate(page: params[:page], per_page: 50)
     @tweet = Tweet.new
   end
 
