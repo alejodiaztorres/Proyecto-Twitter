@@ -30,6 +30,9 @@
                     <strong> <%= tweet.user.name %> </strong>
                     <small> @<%= tweet.user.nickname %> </small> <br/>
                     <p><%= tweet.tweet %></p>
+                    <div class="level-left is-mobile">
+                    
+                    </div>
                 </div>
   
                 <% if user_signed_in? %>
@@ -37,11 +40,13 @@
                 
                     <div class="level-left is-mobile">
 
-                   
-                        <%= link_to '#', class: "level-item" do%>
+                        <%= link_to tweet, class: "level-item" do%>
                             <span class="icon"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> </span>
-                            <h3>1</h3>
+                            <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? '' : ''%>
+                           
                         <% end %>
+
+
 
                          <%= link_to '#', class: "level-item" do%>
                             <span class="icon"><i class="fa fa-retweet" aria-hidden="true"></i> </span>
