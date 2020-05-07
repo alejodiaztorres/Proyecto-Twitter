@@ -15,70 +15,10 @@
     <% end %>
 
 <% @tweets.each do |tweet| %>
-    <div class="box">
-        <article class="media">
-            <div class="media-left">
-
-                <%# <figure class="image is-64x64"> %>
-                    <%# <%= tweet.user.picture%> 
-                <%# </figure> %>
-            </div> 
-            <div class="media-content">
-                <div class="content">
-                    <strong>Foto: </strong>
-                    <small><%= tweet.user.picture %></small> <br/>
-                    <strong> <%= tweet.user.name %> </strong>
-                    <small> @<%= tweet.user.nickname %> </small> <br/>
-                    <p><%= tweet.tweet %></p>
-                    <div class="level-left is-mobile">
-                    
-                    </div>
-                </div>
-  
-                <% if user_signed_in? %>
-                <nav class="level">
-                
-                    <div class="level-left is-mobile">
-                        <% pre_like = tweet.likes.find { |like| like.user_id == current_user.id} %>
-                        
-                        <% if pre_like %>
-                            <%= link_to tweet_like_path(tweet, pre_like), method: :delete, class: "level-item" do %>
-                            <span class="icon"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> </span>
-                            <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? '' : ''%>
-                            <% end %>
-                        <% else %>
-
-                        
-                        <%= link_to tweet_likes_path(tweet), method: :post, class: "level-item" do%>
-                            <span class="icon"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> </span>
-                            <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? '' : ''%>
-                        <% end %>
-                        
-                        <% end %>
-
-                        <%= link_to '#', class: "level-item" do%>
-                            <span class="icon"><i class="fa fa-retweet" aria-hidden="true"></i> </span>
-                            <h3>10</h3>
-                        <% end %>
-
-                        
-                        <%= link_to tweet, class: "level-item" do%>
-                            <span class="icon"><i class="fa fa-link" aria-hidden="true"></i></span>
-                        <% end %>
-
-                        <%= link_to edit_tweet_path(tweet), class: "level-item" do%>
-                            <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                        <% end %>
-
-                        <%= link_to tweet, method: :delete, data: {confirm: "Seguro quieres eliminar el tweet?"} do%>
-                            <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-                        <% end %>
-                    </div>
-                </nav>
-                <% end %>
-            </div>
-        </article>
-    </div>
+    <% unless tweet.tweet_id %>
+    <%= render 'feed_box', tweet: tweet %>
+    <% end %>
 <% end %>
+
 <%= will_paginate @tweets, renderer: BootstrapPagination::Rails, previous_label: "Anterior", next_label: "Mostrar más tweets", inner_window:1, outer_window:0%>
 </div>

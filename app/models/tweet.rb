@@ -1,5 +1,6 @@
 class Tweet < ApplicationRecord
     belongs_to :user
     has_many :likes, dependent: :destroy
-    validates :tweet, presence: true
+    has_many :tweets
+    # validates :tweet, presence: true
 end

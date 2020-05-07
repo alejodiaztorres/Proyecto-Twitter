@@ -1,5 +1,16 @@
-<strong>Tweet:</strong>
-<%= @tweet.tweet %>
+<div class="box"> 
+  <div class="media-content">
+    <div class="content">
+      <strong>Foto: </strong>
+      <small><%= @tweet.user.picture %></small> <br/>
+      <strong> <%= @tweet.user.name %> </strong>
+      <small> @<%= @tweet.user.nickname %> </small> <br/>
+      <p><%= @tweet.tweet %></p>
+    </div>
+  </div>
+</div>
+
+<%= render 'form', tweet: @retweet %>
 
 <%= link_to 'Edit', edit_tweet_path(@tweet) %> |
 <%= link_to 'Back', tweets_path %>

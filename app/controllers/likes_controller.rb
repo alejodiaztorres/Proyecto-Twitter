@@ -37,6 +37,4 @@ class LikesController < ApplicationController
     def find_post
       @tweet = Tweet.find(params[:tweet_id])
     end
-
-
 end

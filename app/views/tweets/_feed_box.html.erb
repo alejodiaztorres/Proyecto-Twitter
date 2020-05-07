@@ -1,0 +1,76 @@
+<div class="box">
+    <article class="media">
+        <div class="media-left">
+
+            <%# <figure class="image is-64x64"> %>
+                <%# <%= tweet.user.picture%> 
+            <%# </figure> %>
+        </div> 
+        <div class="media-content">
+            <div class="content">
+                <strong>Foto: </strong>
+                <small><%= tweet.user.picture %></small> <br/>
+                <strong> <%= tweet.user.name %> </strong>
+                <small> @<%= tweet.user.nickname %> </small> <br/>
+                <p><%= tweet.tweet %></p>
+                <% if tweet.tweets.present? %>
+                <p>Retwiteado por:</p>
+                <ul>
+                <% tweet.tweets.each do |t| %>
+                    <li><%= t.user.name %></li>
+                <% end %>
+                </ul>
+                <% end %>
+
+                <% if time_ago_in_words(tweet.created_at).include? "less" %>
+                  <small><%= time_ago_in_words(tweet.created_at).sub 'less than a minute', 'Hace menos de un minuto' %></small>
+
+                <% elsif time_ago_in_words(tweet.created_at).include? "minutes" %>
+                    <small> Hace <%= time_ago_in_words(tweet.created_at).sub 'minutes', 'minutos' %></small>
+                <% elsif time_ago_in_words(tweet.created_at).include? "minute" %>
+                    <small> Hace <%= time_ago_in_words(tweet.created_at).sub 'minute', 'minuto' %></small>
+                <% else %>
+                    <small> <%= (time_ago_in_words(tweet.created_at).sub 'about', 'Hace').sub 'hours', 'horas' %></small>
+                <% end %>
+            
+                
+            </div>
+
+            <% if user_signed_in? %>
+            <nav class="level">
+            
+                <div class="level-left is-mobile">
+                    <% pre_like = tweet.likes.find { |like| like.user_id == current_user.id} %>
+                    
+                    <% if pre_like %>
+                        <%= link_to tweet_like_path(tweet, pre_like), method: :delete, class: "level-item" do %>
+                        <span class="icon"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> </span>
+                        <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? '' : ''%>
+                        <% end %>
+                    <% else %>
+                    
+                    <%= link_to tweet_likes_path(tweet), method: :post, class: "level-item" do%>
+                        <span class="icon"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> </span>
+                        <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? '' : ''%>
+                    <% end %>
+                    
+                    <% end %>
+
+                    <%= link_to retweet_tweet_path(tweet.id), method: :post, class: "level-item" do%>
+                        <span class="icon"><i class="fa fa-retweet" aria-hidden="true"></i> </span>
+                        <%= tweet.tweets.count %> <%= (tweet.tweets.count) == 1 ? '' : ''%>
+                    <% end %>
+
+                    <%= link_to edit_tweet_path(tweet), class: "level-item" do%>
+                        <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                    <% end %>
+
+                    <%= link_to tweet, method: :delete, data: {confirm: "Seguro quieres eliminar el tweet?"} do%>
+                        <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                    <% end %>
+                </div>
+            </nav>
+            <% end %>
+        </div>
+    </article>
+</div>
