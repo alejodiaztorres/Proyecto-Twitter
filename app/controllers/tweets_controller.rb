@@ -8,6 +8,16 @@ class TweetsController < ApplicationController
     # @tweets = Tweet.order(created_at: :desc).paginate(page: params[:page], per_page: 50)
     @tweets = Tweet.order(created_at: :desc).paginate(page: params[:page], per_page: 50)
     @tweet = Tweet.new
+
+    
+    @q = params[:q]
+    if @q
+      @tweets = Tweet.where("tweet like ?", "%#{@q}%").paginate(page: params[:page], per_page: 50)
+    end
+
+    # if params[:tweet].present?
+    #   Tweet.where('tweet = ?', params[:tweet])
+    # end
   end
 
 

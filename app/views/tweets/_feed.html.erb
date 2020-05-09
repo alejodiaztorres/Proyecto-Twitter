@@ -1,5 +1,12 @@
 <div class="column is-half">
     <% if user_signed_in? %>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+
     <h1 class="pt-5"> Bienvenido <%= current_user.name %> </h1>
     <article class="media box">
         <figure class="medifa-left">
@@ -8,7 +15,7 @@
             </p>
         </figure>
         <div class="media-content">
-            <%= render 'tweets/form'%>
+            <%= render 'tweets/form', tweet: @tweet%>
         </div>
     </article>
     <% end %>
