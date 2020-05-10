@@ -12,7 +12,8 @@ User.destroy_all
 puts '-- Creando usuarios --'
 puts '-- Creando usuario de Alejandro --'
 
-our_user = User.create(name: "Alejandro", email: "alejandro@example.com", nickname: "alejandro", picture: 'https://bulma.io/images/placeholders/64x64.png', password: '123456')
+# our_user = User.create(name: "Alejandro", email: "alejandro@example.com", nickname: "alejandro", picture: 'https://bulma.io/images/placeholders/64x64.png', password: '123456')
+our_user = User.first
 10.times do |j|
     Tweet.create(user: our_user, tweet: "Este es el tweet ##{j + 1}")
 end
@@ -33,3 +34,4 @@ puts '-- Usuario de Alejandro creado --'
 end
 
 puts '-- Usuarios Creados --'
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
