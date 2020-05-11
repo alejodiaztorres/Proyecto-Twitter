@@ -6,9 +6,19 @@ Rails.application.routes.draw do
       post :retweet
     end
   end
+
+  get 'users/:id/toggle_activation', to: 'users#toggle_activation', as: 'toggle_activation'
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  resources :tweets do
+    resources :likes
+  end
+
+  namespace :api do
+    resources :news, only: [:index, :create, :destroy, :update, :show]
+  end
+
   devise_for :users, :controllers => {registrations: 'registrations'}
 
   root 'tweets#index'
