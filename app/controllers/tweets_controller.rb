@@ -1,7 +1,5 @@
 class TweetsController < ApplicationController
-  # skip_before_action :verify_authenticity_token
-  # include ActionController::HttpAuthentication::Basic::ControllerMethods
-  # http_basic_authenticate_with name: "hello", password: "world", except: :index
+
   before_action :set_tweet, only: [:show, :edit, :update, :destroy, :retweet]
   before_action :authenticate_user!, except: [:index, :show]
 
@@ -9,14 +7,9 @@ class TweetsController < ApplicationController
   # GET /tweets.json 
   def index
     # @tweets = Tweet.order(created_at: :desc).paginate(page: params[:page], per_page: 50)
-    @tweets = Tweet.order(created_at: :desc).paginate(page: params[:page], per_page: 50)
+    _tweets = params[:q] ? Tweet.where("tweet like ?", "%#{ params[:q] }%") : Tweet.order(created_at: :desc)
+    @tweets = _tweets.paginate(page: params[:page], per_page: 50)
     @tweet = Tweet.new
-
-    
-    @q = params[:q]
-    if @q
-      @tweets = Tweet.where("tweet like ?", "%#{@q}%").paginate(page: params[:page], per_page: 50)
-    end
 
     # if params[:tweet].present?
     #   Tweet.where('tweet = ?', params[:tweet])
