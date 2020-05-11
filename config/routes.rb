@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :news, only: [:index, :create, :destroy, :update, :show]
+    resources :tweets, only: [:create]
   end
 
   devise_for :users, :controllers => {registrations: 'registrations'}
