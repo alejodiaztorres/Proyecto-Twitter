@@ -1,12 +1,13 @@
 ActiveAdmin.register User do
 
-  permit_params :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :name, :nickname, :picture, :active, :tweets, :likes, :tweet_id
-  
+  permit_params :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :name, :nickname, :picture, :active, :tweets, :likes, :tweet_id, :user
+
+
   index do
     selectable_column
     id_column
     column :email
-    column :active, if: proc { |user| user.active }
+    # toggle_bool_column :active, if: proc { |user| user.active }
     column :tweets do |tweet|
       tweet.tweets.count
     end

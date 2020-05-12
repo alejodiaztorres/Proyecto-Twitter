@@ -1,8 +1,10 @@
 class Api::TweetsController < ApplicationController
     include ActionController::HttpAuthentication::Basic::ControllerMethods
     http_basic_authenticate_with name: "hello", password: "world"
+
     
     def index
+        
         tweets = Tweet.all.order(created_at: :desc)
         @tweets = tweets.map {|tweet| { 
             id: tweet.id, 

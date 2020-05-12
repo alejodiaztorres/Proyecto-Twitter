@@ -5,6 +5,11 @@ class TweetsController < ApplicationController
 
   # GET /tweets
   # GET /tweets.json 
+  def date
+    @tweets = Tweet.where("created_at <= ? AND created_at >= ?", params[:date2], params[:date1])
+    render json: @tweets
+  end
+  
   def index
     # @tweets = Tweet.order(created_at: :desc).paginate(page: params[:page], per_page: 50)
     _tweets = params[:q] ? Tweet.where("tweet like ?", "%#{ params[:q] }%") : Tweet.order(created_at: :desc)

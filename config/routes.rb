@@ -14,10 +14,13 @@ Rails.application.routes.draw do
     resources :likes
   end
 
+
   namespace :api do
     resources :news, only: [:index, :create, :destroy, :update, :show]
     resources :tweets, only: [:create]
   end
+
+  get '/api/:date1/:date2', to: 'tweets#date', as: "date"
 
   devise_for :users, :controllers => {registrations: 'registrations'}
 

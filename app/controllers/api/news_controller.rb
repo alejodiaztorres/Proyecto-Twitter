@@ -2,8 +2,10 @@ class Api::NewsController < ApplicationController
     include ActionController::HttpAuthentication::Basic::ControllerMethods
     http_basic_authenticate_with name: "hello", password: "world"
     
+
     def index
-        tweets = Tweet.all.order(created_at: :desc)
+
+        tweets = Tweet.all.order(created_at: :desc).limit(50)
         @tweets = tweets.map {|tweet| { 
             id: tweet.id, 
             content: tweet.tweet, 
