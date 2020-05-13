@@ -1,24 +1,32 @@
 ActiveAdmin.register User do
 
-  permit_params :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :name, :nickname, :picture, :active, :tweets, :likes, :tweet_id, :user
-
+  permit_params :email, :active, :likes
 
   index do
-    selectable_column
+
     id_column
     column :email
-    # toggle_bool_column :active, if: proc { |user| user.active }
-    column :tweets do |tweet|
-      tweet.tweets.count
+
+    column "Cantidad likes",
+      User.all.each do |user|
+        user.likes.count
     end
-    column :retweets do |rt|
-      rt.tweets.count
+
+    column "Cantidad tweets",
+      User.all.each do |user|
+        user.tweets.count
     end
-    column :likes do |like|
-      like.tweets.count
+
+    column "Cantidad retweets",
+      User.all.each do |user|
+        Tweet.where(user_id: user).count - Tweet.where(user_id: user).where(tweet_id: nil).count
+    end
+
+    column "Inactive",
+      User.all.each do |user|
+        user.active
     end
     actions
   end
-  
 
 end

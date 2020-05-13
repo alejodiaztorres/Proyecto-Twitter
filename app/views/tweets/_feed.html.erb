@@ -21,10 +21,14 @@
     <% end %>
 
 <% @tweets.each do |tweet| %>
+        <td class="text-left">
+        
+        </td>
    
     <div class="box">
     <article class="media">
         <div class="media-left">
+        
 
             <%# <figure class="image is-64x64"> %>
                 <%# <%= tweet.user.picture%> 
@@ -36,7 +40,16 @@
                 <small><%= tweet.user.picture %></small> <br/>
                 <strong> <%= tweet.user.name %> </strong>
                 <small> @<%= tweet.user.nickname %> </small> <br/>
-                <p><%= tweet.tweet %></p>
+                <p>
+                    <% arr = tweet.tweet.split(' ')%>
+                    <%arr.map do |word|%>
+                        <% if word.include? ('#') %>
+                            <a href="<%= request.path%>?utf8=✓&amp;q=%23<%=word[1..(word.size-1)]%>&amp;commit=Search"><%=word%></a>
+                        <% else %>
+                            <%= word %>
+                        <% end %>
+                    <% end %>
+                </p>
 
                 <% if tweet.tweets.present? %>
                 <p>Retwiteado por:</p>
@@ -48,8 +61,7 @@
                 <% end %>
 
                 <% if time_ago_in_words(tweet.created_at).include? "less" %>
-                  <small><%= time_ago_in_words(tweet.created_at).sub 'less than a minute', 'Hace menos de un minuto' %></small>
-
+                    <small><%= time_ago_in_words(tweet.created_at).sub 'less than a minute', 'Hace menos de un minuto' %></small>
                 <% elsif time_ago_in_words(tweet.created_at).include? "minutes" %>
                     <small> Hace <%= time_ago_in_words(tweet.created_at).sub 'minutes', 'minutos' %></small>
                 <% elsif time_ago_in_words(tweet.created_at).include? "minute" %>
@@ -80,16 +92,6 @@
                     <% end %>
                     
                     <% end %>
-
-                    
-                    <%= link_to '#' do %>
-                    <span class="icon"><i class="fa fa-users" aria-hidden="true"></i> </span>
-                    <% end %>
-                  
-                    <%# <%= link_to 'tweets/likes' <span class="icon"><i class="fa fa-users" aria-hidden="true"></i> </span> %> 
-              
-
-                    
 
                     <%= link_to retweet_tweet_path(tweet.id), method: :post, class: "level-item" do%>
                         <span class="icon"><i class="fa fa-retweet" aria-hidden="true"></i> </span>
